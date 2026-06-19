@@ -1,0 +1,35 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        model: openai/gpt-4.1-nano
+        base-url: https://models.github.ai/inference
+#        completions-path: /chat/completions
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+#            table-name: spring_ai_chat_memory
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_ai_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      pool-name: HikariPool-SpringAiKotlin
+      minimum-idle: 10
+      maximum-pool-size: 50
+      max-lifetime: 1800000
+      idle-timeout: 1500000
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true

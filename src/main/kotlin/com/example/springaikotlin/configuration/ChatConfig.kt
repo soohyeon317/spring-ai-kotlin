@@ -10,6 +10,7 @@ import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor
 import org.springframework.ai.chat.client.advisor.api.Advisor
 import org.springframework.ai.chat.memory.ChatMemory
 import org.springframework.ai.chat.memory.MessageWindowChatMemory
+import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
@@ -36,8 +37,11 @@ class ChatConfig {
     }
 
     @Bean
-    fun chatMemory(): ChatMemory {
-        return MessageWindowChatMemory.builder().maxMessages(10).build()
+    fun chatMemory(jdbcChatMemoryRepository: JdbcChatMemoryRepository): ChatMemory {
+        return MessageWindowChatMemory.builder()
+            .chatMemoryRepository(jdbcChatMemoryRepository)
+            .maxMessages(20)
+            .build()
     }
 
     @Bean
