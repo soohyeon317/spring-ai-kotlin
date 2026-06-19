@@ -1,7 +1,7 @@
-package com.exmaple.springaikotlin.endpoint
+package com.example.springaikotlin.endpoint
 
-import com.exmaple.springaikotlin.application.ChatService
-import com.exmaple.springaikotlin.endpoint.dto.PromptBody
+import com.example.springaikotlin.application.ChatService
+import com.example.springaikotlin.endpoint.dto.PromptBody
 import jakarta.validation.Valid
 import org.springframework.ai.chat.messages.Message
 import org.springframework.ai.chat.messages.SystemMessage

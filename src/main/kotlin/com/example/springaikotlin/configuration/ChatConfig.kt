@@ -1,8 +1,8 @@
-package com.exmaple.springaikotlin.configuration
+package com.example.springaikotlin.configuration
 
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
-import com.exmaple.springaikotlin.application.ChatService
+import com.example.springaikotlin.application.ChatService
 import org.slf4j.LoggerFactory
 import org.springframework.ai.chat.client.ChatClient
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor

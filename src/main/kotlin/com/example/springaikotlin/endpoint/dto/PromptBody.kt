@@ -1,4 +1,4 @@
-package com.exmaple.springaikotlin.endpoint.dto
+package com.example.springaikotlin.endpoint.dto
 
 import jakarta.validation.constraints.NotBlank
 import org.springframework.ai.chat.prompt.DefaultChatOptions

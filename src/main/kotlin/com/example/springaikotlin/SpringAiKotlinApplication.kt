@@ -1,4 +1,4 @@
-package com.exmaple.springaikotlin
+package com.example.springaikotlin
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
