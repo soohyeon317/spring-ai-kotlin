@@ -13,7 +13,7 @@ spring:
       memory:
         repository:
           jdbc:
-            initialize-schema: always
+            initialize-schema: always # always는 매 시작마다 DDL을 실행하므로 로컬/개발 환경에는 적합하지만, 운영(production) 환경에서는 보통 never로 두고 Flyway/Liquibase 등으로 스키마를 별도 관리하는 것이 일반적입니다.
 #            table-name: spring_ai_chat_memory
   datasource:
     url: jdbc:postgresql://localhost:5432/spring_ai_db
