@@ -26,10 +26,12 @@ class ChatController(
         @RequestBody @Valid promptBody: PromptBody
     ): ChatResponse {
         val prompt = createPrompt(promptBody = promptBody)
+        val memberId = 1L
 
         return this.chatService.call(
             prompt = prompt,
-            conversationId = promptBody.conversationId!!
+            conversationId = promptBody.conversationId!!,
+            memberId = memberId
         )
     }
 

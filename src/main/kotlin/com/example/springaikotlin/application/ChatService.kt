@@ -1,5 +1,6 @@
 package com.example.springaikotlin.application
 
+import com.example.springaikotlin.domain.member.MemberRepository
 import org.springframework.ai.chat.client.ChatClient
 import org.springframework.ai.chat.memory.ChatMemory
 import org.springframework.ai.chat.model.ChatResponse
@@ -9,13 +10,21 @@ import reactor.core.publisher.Flux
 
 @Service
 class ChatService(
-    private val chatClient: ChatClient
+    private val chatClient: ChatClient,
+    private val memberRepository: MemberRepository,
 ) {
 
     fun call(
         prompt: Prompt,
-        conversationId: String
+        conversationId: String,
+        memberId: Long
     ): ChatResponse {
+        memberRepository.findTopByIdAndDeletedAtIsNullOrderByIdDesc(
+            id = memberId
+        )?.let {
+            println(">>> Member: $it")
+        }
+
         return prepareRequest(
             prompt = prompt,
             conversationId = conversationId
