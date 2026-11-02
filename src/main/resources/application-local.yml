@@ -4,10 +4,10 @@ spring:
       on-profile: local
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY}
+      api-key: ollama # Ollama는 키를 검사하지 않지만, OpenAI 클라이언트에 빈 값이 아닌 키가 필요합니다.
       chat:
-        model: openai/gpt-4.1-nano
-        base-url: https://models.github.ai/inference
+        model: hf.co/unsloth/gemma-4-E4B-it-GGUF:Q4_K_M
+        base-url: http://localhost:11434/v1
 #        completions-path: /chat/completions
     chat:
       memory:
