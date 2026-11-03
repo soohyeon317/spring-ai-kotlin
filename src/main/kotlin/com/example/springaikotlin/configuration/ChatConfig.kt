@@ -17,6 +17,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.jdbc.core.JdbcTemplate
 import java.util.Scanner
 
 
@@ -34,6 +35,15 @@ class ChatConfig {
     @Bean
     fun simpleLoggerAdvisor(): SimpleLoggerAdvisor {
         return SimpleLoggerAdvisor.builder().build()
+    }
+
+    // 기본 자동 구성(@ConditionalOnMissingBean)을 대체하여 테이블명을 바꾼 Dialect를 사용
+    @Bean
+    fun jdbcChatMemoryRepository(jdbcTemplate: JdbcTemplate): JdbcChatMemoryRepository {
+        return JdbcChatMemoryRepository.builder()
+            .jdbcTemplate(jdbcTemplate)
+            .dialect(ConversationHistoryDialect())
+            .build()
     }
 
     @Bean

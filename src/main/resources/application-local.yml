@@ -14,7 +14,8 @@ spring:
         repository:
           jdbc:
             initialize-schema: always # always는 매 시작마다 DDL을 실행하므로 로컬/개발 환경에는 적합하지만, 운영(production) 환경에서는 보통 never로 두고 Flyway/Liquibase 등으로 스키마를 별도 관리하는 것이 일반적입니다.
-#            table-name: spring_ai_chat_memory
+            schema: classpath:schema/conversation-history-postgresql.sql # 테이블명을 conversation_history로 바꾼 커스텀 스키마 (Spring AI에는 table-name 프로퍼티가 없음)
+            continue-on-error: false # 기본값 true는 스키마 SQL 에러를 무시하고 기동하므로, 에러 시 기동 실패하도록 설정
   datasource:
     url: jdbc:postgresql://localhost:5432/spring_ai_db
     username: ${DB_USERNAME}

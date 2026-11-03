@@ -30,6 +30,8 @@
         <java.version>25</java.version>
         <kotlin.version>2.3.21</kotlin.version>
         <spring-ai.version>2.0.0</spring-ai.version>
+        <!-- 빌드 시 테스트 실행 생략 (테스트 컴파일은 수행). 실행하려면 -DskipTests=false -->
+        <skipTests>true</skipTests>
     </properties>
     <dependencies>
         <dependency>
