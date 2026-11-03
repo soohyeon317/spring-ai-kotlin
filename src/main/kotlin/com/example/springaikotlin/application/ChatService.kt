@@ -1,6 +1,7 @@
 package com.example.springaikotlin.application
 
 import com.example.springaikotlin.configuration.ChatMemoryAdvisorRegistry
+import com.example.springaikotlin.configuration.ConversationType
 import org.springframework.ai.chat.client.ChatClient
 import org.springframework.ai.chat.memory.ChatMemory
 import org.springframework.ai.chat.model.ChatResponse

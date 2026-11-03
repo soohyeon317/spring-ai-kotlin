@@ -1,4 +1,4 @@
-package com.example.springaikotlin.application
+package com.example.springaikotlin.configuration
 
 /**
  * 대화 종류. 종류마다 대화 내역을 별도 테이블에 저장한다.

@@ -1,6 +1,6 @@
 package com.example.springaikotlin.endpoint.dto
 
-import com.example.springaikotlin.application.ConversationType
+import com.example.springaikotlin.configuration.ConversationType
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import org.springframework.ai.chat.prompt.DefaultChatOptions
