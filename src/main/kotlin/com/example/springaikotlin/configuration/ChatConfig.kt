@@ -3,14 +3,11 @@ package com.example.springaikotlin.configuration
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
 import com.example.springaikotlin.application.ChatService
+import com.example.springaikotlin.application.ConversationType
 import org.slf4j.LoggerFactory
 import org.springframework.ai.chat.client.ChatClient
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor
 import org.springframework.ai.chat.client.advisor.api.Advisor
-import org.springframework.ai.chat.memory.ChatMemory
-import org.springframework.ai.chat.memory.MessageWindowChatMemory
-import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
@@ -37,26 +34,13 @@ class ChatConfig {
         return SimpleLoggerAdvisor.builder().build()
     }
 
-    // 기본 자동 구성(@ConditionalOnMissingBean)을 대체하여 테이블명을 바꾼 Dialect를 사용
+    // 대화 종류별 메모리 Advisor (Advisor 빈이 아니므로 defaultAdvisors에 포함되지 않고, ChatService가 요청마다 하나를 골라 붙임)
     @Bean
-    fun jdbcChatMemoryRepository(jdbcTemplate: JdbcTemplate): JdbcChatMemoryRepository {
-        return JdbcChatMemoryRepository.builder()
-            .jdbcTemplate(jdbcTemplate)
-            .dialect(ConversationHistoryDialect())
-            .build()
-    }
-
-    @Bean
-    fun chatMemory(jdbcChatMemoryRepository: JdbcChatMemoryRepository): ChatMemory {
-        return MessageWindowChatMemory.builder()
-            .chatMemoryRepository(jdbcChatMemoryRepository)
-            .maxMessages(20)
-            .build()
-    }
-
-    @Bean
-    fun messageChatMemoryAdvisor(chatMemory: ChatMemory): MessageChatMemoryAdvisor {
-        return MessageChatMemoryAdvisor.builder(chatMemory).build()
+    fun chatMemoryAdvisorRegistry(jdbcTemplate: JdbcTemplate): ChatMemoryAdvisorRegistry {
+        return ChatMemoryAdvisorRegistry(
+            jdbcTemplate = jdbcTemplate,
+            maxMessages = 20,
+        )
     }
 
     // 스프링 부트 서버가 완전히 켜지기 전에 단 한번 자동으로 실행
@@ -96,7 +80,7 @@ class ChatConfig {
 
                     // 스트리밍 처리 (핵심 변경 포인트)
                     // Flux(스트림)를 toIterable()로 바꾸면 일반적인 for-each 문으로 한 글자씩 꺼내 쓸 수 있음!
-                    val chatStream: Iterable<String> = chatService.stream(Prompt(userMessage), "cli").toIterable()
+                    val chatStream: Iterable<String> = chatService.stream(Prompt(userMessage), "cli", ConversationType.GENERAL).toIterable()
 
                     for (token in chatStream) {
                         print(token) // 한 글자씩 화면에 출력 (타이핑 효과)

@@ -29,7 +29,8 @@ class ChatController(
 
         return this.chatService.call(
             prompt = prompt,
-            conversationId = promptBody.conversationId!!
+            conversationId = promptBody.conversationId!!,
+            conversationType = promptBody.conversationType!!,
         )
     }
 
@@ -41,7 +42,8 @@ class ChatController(
 
         return this.chatService.stream(
             prompt = prompt,
-            conversationId = promptBody.conversationId!!
+            conversationId = promptBody.conversationId!!,
+            conversationType = promptBody.conversationType!!,
         )
     }
 
